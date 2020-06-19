@@ -1,0 +1,6 @@
+# Variables with default values
+
+#TODO: Use a Token and the right Repo
+config_git_url: "https://<TOKEN>@xxx/<REPOSITORY>.git"
+tinyproxy_config_path: /shared/tinyproxy/internal/tinyproxy.conf
+

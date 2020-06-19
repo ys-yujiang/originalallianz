@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.2",
+  "description": "Backup for application",
+  "runtimeConfig": {
+    "aws:runShellScript": {
+      "properties": {
+        "id": "0.aws:runShellScript",
+        "runCommand": [
+          {
+            "Fn::Join": [
+              " ",
+              [
+                "FILE=archive-$(date +\"%Y-%m-%d\").zip &&",
+                "cd /var/lib/jenkins &&",
+                "zip -r /tmp/$FILE . &&",
+                "aws s3 cp /tmp/$FILE",
+                { "Fn::FindInMap" : [ "BucketMap", { "Ref" : "AWS::Region" }, "BucketName"]},
+                "--acl bucket-owner-full-control --region",
+                {
+                  "Ref": "AWS::Region"
+                },
+                "&& rm /tmp/$FILE"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
